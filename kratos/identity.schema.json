@@ -38,6 +38,15 @@
               "type": "string"
             }
           }
+        },
+        "corporate": {
+          "type": "object",
+          "properties": {
+            "companyName": {
+              "title": "Company Name",
+              "type": "string"
+            }
+          }
         }
       },
       "required": [
