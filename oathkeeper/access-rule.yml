@@ -1,0 +1,101 @@
+- id: "ory:token-house-application:protected"
+  upstream:
+    url: "http://192.168.0.149:8000/"
+    preserve_host: true
+  match:
+    url: "http://192.168.0.149:4456/api/customerportal/application<**>"
+    methods:
+      - GET
+      - POST
+      - PUT
+  authenticators:
+    - handler: cookie_session
+  mutators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:3000/login
+
+- id: "ory:token-house-swagger:unprotected"
+  upstream:
+    url: "http://192.168.0.149:8000/"
+    preserve_host: true
+  match:
+    url: "http://192.168.0.149:4456/api"
+    methods:
+      - GET
+      - POST
+      - PUT
+  authenticators:
+    - handler: noop
+  mutators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:3000/login
+
+- id: "ory:token-house-countries:protected"
+  upstream:
+    url: "http://192.168.191.57:4201/"
+    preserve_host: true
+  match:
+    url: "http://127.0.0.1:8080/api/v1/cou<**>"
+    methods:
+      - GET
+      - POST
+  authenticators:
+    - handler: noop
+  mutators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:3000/login
+
+- id: "ory:token-house-occupation-type:protected"
+  upstream:
+    url: "http://192.168.191.57:4201/"
+    preserve_host: true
+  match:
+    url: "http://127.0.0.1:8080/api/v1/occ<**>"
+    methods:
+      - GET
+      - POST
+  authenticators:
+    - handler: noop
+  mutators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:3000/login
+
+- id: "ory:token-house-occupation-type:protected"
+  upstream:
+    url: "http://192.168.191.57:4201/"
+    preserve_host: true
+  match:
+    url: "http://127.0.0.1:8080/api/v1/nftT<**>"
+    methods:
+      - GET
+      - POST
+  authenticators:
+    - handler: noop
+  mutators:
+    - handler: noop
+  authorizer:
+    handler: allow
+  errors:
+    - handler: redirect
+      config:
+        to: http://127.0.0.1:3000/login

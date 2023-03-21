@@ -1,0 +1,30 @@
+version: "3.7"
+
+services:
+  # kratos:
+  #   environment:
+  #     - SERVE_PUBLIC_BASE_URL=http://192.168.0.2:4455/.ory/kratos/public/
+
+  # stackways-container-app:
+  #   environment:
+  #     - PORT=9000
+  #     - KRATOS_BROWSER_URL=http://192.168.0.2:4455/.ory/kratos/public
+  #     - JWKS_URL=http://oathkeeper:4456/.well-known/jwks.json
+  #     - SECURITY_MODE=jwks
+
+  oathkeeper:
+    image: oryd/oathkeeper:v0.38
+    depends_on:
+      - kratos
+    ports:
+      - 8080:4455
+      - 4456:4456
+    command: serve proxy -c "/etc/config/oathkeeper/oathkeeper.yml"
+    environment:
+      - LOG_LEVEL=debug
+      - SERVE_PROXY_PORT=4455
+    restart: on-failure
+    networks:
+      - intranet
+    volumes:
+      - ./oathkeeper:/etc/config/oathkeeper
