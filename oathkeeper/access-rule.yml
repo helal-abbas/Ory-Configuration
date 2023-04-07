@@ -1,9 +1,9 @@
-- id: "ory:application:protected"
+- id: "ory:ms-application:protected"
   upstream:
     url: "http://127.0.0.1:8000/"
     preserve_host: true
   match:
-    url: "http://192.168.0.149:4456/api/<**>"
+    url: "http://127.0.0.1:4456/api/<**>"
     methods:
       - GET
       - POST
