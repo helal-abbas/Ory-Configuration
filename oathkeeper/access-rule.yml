@@ -1,4 +1,4 @@
-- id: "ory:token-house-application:protected"
+- id: "ory:application:protected"
   upstream:
     url: "http://127.0.0.1:8000/"
     preserve_host: true
