@@ -38,35 +38,6 @@
               "type": "string"
             }
           }
-        },
-        "corporate": {
-          "type": "object",
-          "properties": {
-            "companyName": {
-              "title": "Company Name",
-              "type": "string"
-            }
-          }
-        },
-        "phoneNumber": {
-          "type": "object",
-          "properties": {
-            "phoneNumber": {
-              "title": "Phone Number",
-              "type": "string"
-            }
-          }
-        },
-        "username": {
-          "title": "Username",
-          "type": "string",
-          "ory.sh/kratos": {
-            "credentials": {
-              "password": {
-                "identifier": true
-              }
-            }
-          }
         }
       },
       "required": [

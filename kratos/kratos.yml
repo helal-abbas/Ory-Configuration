@@ -4,12 +4,12 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://127.0.0.1:4433/
+    base_url: http://192.168.0.6:4433/
     cors:
       enabled: true
       allowed_origins:
         # - "*"
-        - "http://127.0.0.1:4200"
+        - "http://192.168.0.6:4200"
         # - "http://localhost:4200"
       allowed_methods:
         - POST
@@ -32,9 +32,9 @@ serve:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://127.0.0.1:4200/
+  default_browser_return_url: http://192.168.0.6:4200/
   allowed_return_urls:
-    - http://127.0.0.1:4200
+    - http://192.168.0.6:4200
 
   methods:
     link:
@@ -46,63 +46,40 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://127.0.0.1:4200/error
+      ui_url: http://192.168.0.6:4200/error
 
     settings:
-      ui_url: http://127.0.0.1:4200/settings
+      ui_url: http://192.168.0.6:4200/settings
       privileged_session_max_age: 15m
 
     recovery:
       enabled: true
-      ui_url: http://127.0.0.1:4200/settings
+      ui_url: http://192.168.0.6:4200/settings
       after:
         hooks:
         - hook: revoke_active_sessions
 
     verification:
       enabled: true
-      ui_url: http://127.0.0.1:4200/verification
+      ui_url: http://192.168.0.6:4200/verification
       after:
-        default_browser_return_url: http://127.0.0.1:4200/
+        default_browser_return_url: http://192.168.0.6:4200/
 
     logout:
       after:
-        default_browser_return_url: http://127.0.0.1:4200/login
+        default_browser_return_url: http://192.168.0.6:4200/login
 
     login:
-      ui_url: http://127.0.0.1:4200/login
+      ui_url: http://192.168.0.6:4200/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://127.0.0.1:4200/registration
+      ui_url: http://192.168.0.6:4200/registration
       after:
         password:
           hooks:
             - hook: session
-    # registration:
-    #   lifespan: 10m
-    #   ui_url: http://127.0.0.1:4200/registration
-    #   after:
-    #     oidc:
-    #       hooks:
-    #         - hook: web_hook
-    #           config:
-    #             # url: http://192.168.0.190:4201/api/ms-identities/user
-    #             url: http://192.168.0.2:4201/api/customerportal/address/rest-ory
-    #             method: POST # GET, DELETE, etc
-    #             body: /etc/config/kratos/file/syntax.jsonnet
-
-    #         - hook: session
-    #     password:
-    #       hooks:
-    #         - hook: web_hook
-    #           config:
-    #             # url: http://192.168.0.190:4201/api/ms-identities/user
-    #             url: http://192.168.0.2:4201/api/customerportal/address/rest-ory
-    #             method: POST # GET, DELETE, etc
-    #             body: /etc/config/kratos/file/syntax.jsonnet
-
 log:
   level: debug
   format: text
