@@ -26,6 +26,18 @@
             }
           }
         },
+        "username": {
+          "type": "string",
+          "minLength": 6,
+          "title": "Username",
+          "ory.sh/kratos": {
+            "credentials": {
+              "password": {
+                "identifier": true
+              }
+            }
+          }
+        },
         "name": {
           "type": "object",
           "properties": {
@@ -35,6 +47,25 @@
             },
             "last": {
               "title": "Last Name",
+              "type": "string"
+            }
+         
+          }
+        },
+        "corporate": {
+          "type": "object",
+          "properties": {
+            "companyName": {
+              "title": "Company Name",
+              "type": "string"
+            }
+          }
+        },
+        "country": {
+          "type": "object",
+          "properties": {
+            "countryName": {
+              "title": "Country Name",
               "type": "string"
             }
           }

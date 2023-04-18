@@ -30,7 +30,7 @@
 #     redirect:
 #       enabled: true
 #       config:
-#         to: http://192.168.0.6:3000/login
+#         to: http://192.168.0.12:3000/login
 #         when:
 #           - error:
 #               - unauthorized
@@ -87,7 +87,9 @@ serve:
     cors:
       enabled: true
       allowed_origins:
-        - "http://192.168.0.6:4455"
+        - "http://192.168.0.12:4455"
+        - "http://192.168.0.12:4200"
+        - "http://192.168.0.12:4201"
       allowed_methods:
         - POST
         - GET
@@ -113,7 +115,7 @@ errors:
     redirect:
       enabled: true
       config:
-        to: http://192.168.0.6:4455/login
+        to: http://192.168.0.12:4455/login
         when:
           - error:
               - unauthorized
@@ -160,7 +162,7 @@ authorizers:
   # remote_json:
   #   enabled: true
   #   config:
-  #     remote: http://192.168.0.1:3000/api/ms-identities/rbac-role
+  #     remote: http://192.168.0.12:4201/rbac-role
   #     forward_response_headers_to_upstream:
   #       [
   #         "url",
@@ -169,16 +171,72 @@ authorizers:
   #       {
   #         "url":"{{ .MatchContext.URL}}",
   #       }
-  #     retry:
-  #       max_delay: 1s
-  #       give_up_after: 1s
+  #     # retry:
+  #     #   max_delay: 1s
+  #     #   give_up_after: 1s
 
 mutators:
   noop:
     enabled: true
-  # header:
-  #   ## Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
-  #   enabled: true
-  #   config:
-  #     headers:
-  #       X-User: "{{ print .Subject }}"
+
+  id_token:
+    enabled: true
+    config:
+      issuer_url: http://192.168.0.12:4455/
+      jwks_url: file:///etc/config/oathkeeper/id_token.jwks.json
+      claims: |
+        {
+          "session": {{ .Extra | toJson }}
+        }
+  cookie:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      cookies:
+        user: "{{ print .Subject }}"
+        some-arbitrary-data: "{{ print .Extra }}"
+
+# authorizers:
+#   allow:
+#     enabled: true
+#   deny:
+#     enabled: true
+#   remote_json:
+#     # remote_json documentation: https://www.ory.sh/oathkeeper/docs/pipeline/authz#remote_json
+#     enabled: true
+#     config:
+#       remote: http://192.168.0.12:4201/rbac-role
+#       forward_response_headers_to_upstream:
+#         [
+#           "url",
+#         ]
+#       payload: |
+#         {
+#           "url":"{{ .MatchContext.URL}}",
+#         }
+# mutators:
+#   noop:
+#     enabled: true
+#   header:
+#     # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+#     enabled: true
+#     config:
+#       headers:
+#         X-User: "{{ print .Subject }}"
+#         X-Some-Arbitrary-Data: "{{ print .Extra}}"
+#   id_token:
+#     enabled: true
+#     config:
+#       issuer_url: http://192.168.0.12:4455/
+#       jwks_url: file:///etc/config/oathkeeper/id_token.jwks.json
+#       claims: |
+#         {
+#           "url":"{{ .MatchContext.URL}}",
+#         }
+#   cookie:
+#     # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+#     enabled: true
+#     config:
+#       cookies:
+#         user: "{{ print .Subject }}"
+#         some-arbitrary-data: "{{ print .Extra }}"
