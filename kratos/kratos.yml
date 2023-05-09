@@ -4,12 +4,12 @@
 
 # serve:
 #   public:
-#     base_url: http://192.168.0.12:4433/
+#     base_url: http://172.26.80.1:4433/
 #     cors:
 #       enabled: true
 #       allowed_origins:
 #         # - "*"
-#         - "http://192.168.0.12:4200"
+#         - "http://172.26.80.1:4200"
 #         # - "http://localhost:4200"
 #       allowed_methods:
 #         - POST
@@ -32,9 +32,9 @@
 #     base_url: http://kratos:4434/
 
 # selfservice:
-#   default_browser_return_url: http://192.168.0.12:4200/
+#   default_browser_return_url: http://172.26.80.1:4200/
 #   allowed_return_urls:
-#     - http://192.168.0.12:4200
+#     - http://172.26.80.1:4200
 
 #   methods:
 #     link:
@@ -46,36 +46,36 @@
 
 #   flows:
 #     error:
-#       ui_url: http://192.168.0.12:4200/error
+#       ui_url: http://172.26.80.1:4200/error
 
 #     settings:
-#       ui_url: http://192.168.0.12:4200/settings
+#       ui_url: http://172.26.80.1:4200/settings
 #       privileged_session_max_age: 15m
 
 #     recovery:
 #       enabled: true
-#       ui_url: http://192.168.0.12:4200/settings
+#       ui_url: http://172.26.80.1:4200/settings
 #       after:
 #         hooks:
 #         - hook: revoke_active_sessions
 
 #     verification:
 #       enabled: true
-#       ui_url: http://192.168.0.12:4200/verification
+#       ui_url: http://172.26.80.1:4200/verification
 #       after:
-#         default_browser_return_url: http://192.168.0.12:4200/
+#         default_browser_return_url: http://172.26.80.1:4200/
 
 #     logout:
 #       after:
-#         default_browser_return_url: http://192.168.0.12:4200/login
+#         default_browser_return_url: http://172.26.80.1:4200/login
 
 #     login:
-#       ui_url: http://192.168.0.12:4200/login
+#       ui_url: http://172.26.80.1:4200/login
 #       lifespan: 10m
 
 #     registration:
 #       lifespan: 10m
-#       ui_url: http://192.168.0.12:4200/registration
+#       ui_url: http://172.26.80.1:4200/registration
 #       after:
 #         password:
 #           hooks:
@@ -116,12 +116,12 @@ dsn: memory
 
 serve:
   public:
-    base_url: http://192.168.0.12:4433/
+    base_url: http://172.26.80.1:4433/.ory/kratos/public/
     cors:
       enabled: true
       allowed_origins:
         # - "*"
-        - "http://192.168.0.12:4200"
+        - "http://172.26.80.1:4200"
         # - "http://localhost:4200"
       allowed_methods:
         - POST
@@ -143,9 +143,9 @@ serve:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://192.168.0.12:4200/
+  default_browser_return_url: http://172.26.80.1:4200/
   allowed_return_urls:
-    - http://192.168.0.12:4200
+    - http://172.26.80.1:4200
 
   methods:
     password:
@@ -163,36 +163,36 @@ selfservice:
 
   flows:
     error:
-      ui_url: http://192.168.0.12:4200/error
+      ui_url: http://172.26.80.1:4200/error
 
     settings:
-      ui_url: http://192.168.0.12:4200/settings
+      ui_url: http://172.26.80.1:4200/settings
       privileged_session_max_age: 15m
       required_aal: highest_available
 
     recovery:
       enabled: true
-      ui_url: http://192.168.0.12:4200/recovery
+      ui_url: http://172.26.80.1:4200/recovery
       use: code
 
     verification:
       enabled: true
-      ui_url: http://192.168.0.12:4200/verification
+      ui_url: http://172.26.80.1:4200/verification
       use: code
       after:
-        default_browser_return_url: http://192.168.0.12:4200/
+        default_browser_return_url: http://172.26.80.1:4200/
 
     logout:
       after:
-        default_browser_return_url: http://192.168.0.12:4200/login
+        default_browser_return_url: http://172.26.80.1:4200/login
 
     login:
-      ui_url: http://192.168.0.12:4200/login
+      ui_url: http://172.26.80.1:4200/login
       lifespan: 10m
 
     registration:
       lifespan: 10m
-      ui_url: http://192.168.0.12:4200/registration
+      ui_url: http://172.26.80.1:4200/registration
       after:
         password:
           hooks:

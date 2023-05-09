@@ -30,7 +30,7 @@
 #     redirect:
 #       enabled: true
 #       config:
-#         to: http://192.168.0.12:3000/login
+#         to: http://172.26.80.1:3000/login
 #         when:
 #           - error:
 #               - unauthorized
@@ -87,9 +87,10 @@ serve:
     cors:
       enabled: true
       allowed_origins:
-        - "http://192.168.0.12:4455"
-        - "http://192.168.0.12:4200"
-        - "http://192.168.0.12:4201"
+        - "http://172.26.80.1:4455"
+        - "http://172.26.80.1:4200"
+        - "http://172.26.80.1:4201"
+        # - "*"
       allowed_methods:
         - POST
         - GET
@@ -97,6 +98,8 @@ serve:
         - PATCH
         - DELETE
       allowed_headers:
+        - "*"
+        - Access-Control-Allow-Origin' 
         - Authorization
         - Content-Type 
         - Cookie
@@ -115,7 +118,7 @@ errors:
     redirect:
       enabled: true
       config:
-        to: http://192.168.0.12:4455/login
+        to: http://172.26.80.1:4455/login
         when:
           - error:
               - unauthorized
@@ -159,21 +162,21 @@ authorizers:
   deny:
     enabled: true
 
-  # remote_json:
-  #   enabled: true
-  #   config:
-  #     remote: http://192.168.0.12:4201/rbac-role
-  #     forward_response_headers_to_upstream:
-  #       [
-  #         "url",
-  #       ]
-  #     payload: |
-  #       {
-  #         "url":"{{ .MatchContext.URL}}",
-  #       }
-  #     # retry:
-  #     #   max_delay: 1s
-  #     #   give_up_after: 1s
+  remote_json:
+    enabled: true
+    config:
+      remote: http://172.26.80.1:4201/api/rbac-role
+      forward_response_headers_to_upstream:
+        [
+          "url"
+        ]
+      payload: |
+        {
+          "url":"{{ .MatchContext.URL}}"
+        }
+      # retry:
+      #   max_delay: 1s
+      #   give_up_after: 1s
 
 mutators:
   noop:
@@ -182,7 +185,7 @@ mutators:
   id_token:
     enabled: true
     config:
-      issuer_url: http://192.168.0.12:4455/
+      issuer_url: http://172.26.80.1:4455/
       jwks_url: file:///etc/config/oathkeeper/id_token.jwks.json
       claims: |
         {
@@ -194,7 +197,14 @@ mutators:
     config:
       cookies:
         user: "{{ print .Subject }}"
-        some-arbitrary-data: "{{ print .Extra }}"
+        some-arbitrary-data: "{{ print .Extra}}"
+  header:
+    # Set enabled to true if the authenticator should be enabled and false to disable the authenticator. Defaults to false.
+    enabled: true
+    config:
+      headers:
+        user: "{{ print .Subject }}"
+        some-arbitrary-data: "{{ print .Extra}}"
 
 # authorizers:
 #   allow:
@@ -205,7 +215,7 @@ mutators:
 #     # remote_json documentation: https://www.ory.sh/oathkeeper/docs/pipeline/authz#remote_json
 #     enabled: true
 #     config:
-#       remote: http://192.168.0.12:4201/rbac-role
+#       remote: http://172.26.80.1:4201/rbac-role
 #       forward_response_headers_to_upstream:
 #         [
 #           "url",
@@ -227,7 +237,7 @@ mutators:
 #   id_token:
 #     enabled: true
 #     config:
-#       issuer_url: http://192.168.0.12:4455/
+#       issuer_url: http://172.26.80.1:4455/
 #       jwks_url: file:///etc/config/oathkeeper/id_token.jwks.json
 #       claims: |
 #         {
