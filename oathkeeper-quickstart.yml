@@ -5,7 +5,7 @@ services:
     environment:
       - SERVE_PUBLIC_BASE_URL=http://172.28.240.1:4455/.ory/kratos/public/
 
-  # stackways-container-app:
+  # container-app:
   #   environment:
   #     - PORT=9000
   #     - KRATOS_BROWSER_URL=http://192.168.0.2:4455/.ory/kratos/public
