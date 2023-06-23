@@ -22,7 +22,7 @@ services:
     command: serve proxy -c "/etc/config/oathkeeper/oathkeeper.yml"
     environment:
       - LOG_LEVEL=debug
-      - SERVE_PROXY_PORT=4455
+      - SERVE_PROXY_PORT=4200
     restart: on-failure
     networks:
       - intranet
